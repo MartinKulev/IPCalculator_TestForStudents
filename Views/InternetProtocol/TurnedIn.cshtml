@@ -1,0 +1,45 @@
+﻿<title>Предадено</title>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .main-heading-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .main-heading {
+            font-weight: bold;
+            font-size: 60px;
+            margin: 100px;
+            color: black;
+        }
+
+        .turn-in-button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .turn-in-button {
+            width: 300px;
+            height: 75px;
+            background-color: #ff6600;
+            border-radius: 10px;
+            color: white;
+            font-size: 30px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-heading-container"><div class="main-heading">Отговорът ви бе записан</div></div>
+    <form class="turn-in-button-container" asp-action="TurnedIn" asp-controller="InternetProtocol">
+        <button class="turn-in-button">Виж резултати</button>
+    </form>
+</body>
+</html>

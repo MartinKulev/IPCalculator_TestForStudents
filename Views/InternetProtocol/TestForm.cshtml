@@ -1,0 +1,1020 @@
+﻿<title>Тест</title>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 1100px;
+            overflow-y:auto;
+        }
+
+        .main-logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            max-width: 160px;
+            max-height: 182.19px;
+        }
+
+        .heading-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .main-heading {
+            font-weight: bold;
+            font-size: 60px;
+            color: black;
+        }
+
+        .ip-heading {
+            font-weight: bold;
+            font-size: 60px;
+            color: #ff6600;
+        }
+
+        .subnet-heading {
+            display: flex;
+            flex-direction: row;
+            font-weight: bold;
+            font-size: 30px;
+            color: black;
+        }
+
+        .subnet-subHeading {
+            margin-right: 10px;
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: 30px;
+            color: #ff6600;
+        }
+
+        .input-box {
+            border: 1px solid #999;
+            border-radius: 5px;
+            width: 300px;
+            height: 40px;
+            font-size: 25px;
+        }
+
+        .mini-input-box {
+            height: 40px;
+            width: 75px;
+            border: 1px solid #999;
+            font-size: 25px;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .info-container-student {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin: 20px;
+            margin-bottom: 200px;
+        }
+
+        .info-text-container {
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .info-subContainer {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-right: 20px;
+            margin-left: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .ip-digit-box {
+            height: 40px;
+            width: 25px;
+            margin: 2px;
+            font-size: 25px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .ip-dot {
+            font-weight: bold;
+            font-size: 43px;
+        }
+
+        .ip-input-container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .turn-in-button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+        }
+
+        .turn-in-button {
+            width: 200px;
+            height: 50px;
+            background-color: #ff6600;
+            border-radius: 10px;
+            color: white;
+            font-size: 30px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .select-category {
+            font-size: 20px;
+            height: 40px;
+            color: #333;
+            font-family: Verdana,Helvetica,Sans-Serif;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var containers = document.querySelectorAll('.ip-input-container');
+
+            containers.forEach(function (container) {
+                var inputs = container.querySelectorAll('.ip-digit-box');
+
+                inputs.forEach(function (input, index) {
+                    input.addEventListener('input', function () {
+                        if (this.value.length >= parseInt(this.getAttribute('maxlength'), 10)) {
+                            var nextIndex = index + 1;
+                            if (nextIndex < inputs.length) {
+                                inputs[nextIndex].focus();
+                            }
+                        }
+                    });
+
+                    input.addEventListener('keydown', function (event) {
+                        if (event.key === 'Backspace' && this.selectionStart === 0) {
+                            var prevIndex = index - 1;
+                            if (prevIndex >= 0) {
+                                inputs[prevIndex].focus();
+                                inputs[prevIndex].selectionStart = inputs[prevIndex].selectionEnd = 1;
+                            }
+                        }
+                    });
+                });
+            });
+        });
+        $(document).ready(function () {
+            $(window).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <form class="container" asp-action="TestForm" asp-controller="InternetProtocol" onkeydown="return event.key != 'Enter';" autocomplete="off">
+        <div class="heading-container"><div class="main-heading">IP адресиране - Тест</div></div>
+        <div class="heading-container"><div class="ip-heading">@Model.IPDec</div></div>
+        <div class="heading-container"><div class="subnet-heading">разделено на <div class="subnet-subHeading">@Model.SubnetCount</div> подмрежи</div></div>
+        <div class="info-container-student">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Имена: </div>
+                </div>
+                <input class="input-box" name="name" required />
+            </div>
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>№: </div>
+                </div>
+                <input class="mini-input-box" name="number" required />
+            </div>
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Клас: </div>
+                </div>
+                <input class="mini-input-box" name="schoolclass" required />
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете IP адреса в двоична бройна система:</div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="ipBin1" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin2" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin3" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin4" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin5" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin6" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin7" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin8" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="ipBin9" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin10" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin11" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin12" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin13" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin14" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin15" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin16" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="ipBin17" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin18" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin19" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin20" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin21" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin22" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin23" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin24" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="ipBin25" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin26" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin27" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin28" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin29" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin30" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin31" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="ipBin32" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Определете от кой клас мрежа е IP адреса:</div>
+                </div>
+                <select class="select-category" name="networkClass" onchange="javascript:changemm(document.search.topmenu,document.search.f5,document.search.f6,'2','1','Избери',27)">
+                    <option selected="" value="-">Изберете клас</option>
+                    <option value="A">Клас A</option>
+                    <option value="B">Клас B</option>
+                    <option value="C">Клас C</option>
+                </select>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовата маска в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="smBin1" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin2" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin3" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin4" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin5" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin6" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin7" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin8" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="smBin9" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin10" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin11" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin12" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin13" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin14" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin15" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin16" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="smBin17" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin18" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin19" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin20" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin21" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin22" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin23" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin24" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="smBin25" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin26" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin27" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin28" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin29" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin30" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin31" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="smBin32" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовата маска в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="smDec1" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="smDec2" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="smDec3" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="smDec4" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="naBin1" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin2" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin3" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin4" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin5" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin6" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin7" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin8" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="naBin9" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin10" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin11" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin12" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin13" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin14" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin15" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin16" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="naBin17" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin18" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin19" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin20" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin21" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin22" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin23" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin24" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="naBin25" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin26" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin27" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin28" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin29" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin30" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin31" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="naBin32" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="naDec1" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="naDec2" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="naDec3" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="naDec4" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="braBin1" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin2" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin3" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin4" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin5" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin6" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin7" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin8" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="braBin9" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin10" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin11" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin12" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin13" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin14" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin15" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin16" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="braBin17" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin18" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin19" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin20" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin21" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin22" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin23" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin24" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="braBin25" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin26" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin27" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin28" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin29" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin30" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin31" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="braBin32" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="braDec1" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="braDec2" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="braDec3" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="braDec4" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете обхвата на мрежата: </div>
+                </div>
+                <div class="info-text-container">
+                    <div>от </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="rangeFrom1" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="rangeFrom2" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="rangeFrom3" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="rangeFrom4" maxlength="3" minlength="1" />
+                </div>
+                <div class="info-text-container">
+                    <div>до </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="rangeTo1" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="rangeTo2" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="rangeTo3" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="rangeTo4" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете подмрежовата маска в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="subnetSMBin1" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin2" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin3" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin4" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin5" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin6" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin7" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin8" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetSMBin9" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin10" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin11" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin12" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin13" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin14" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin15" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin16" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetSMBin17" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin18" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin19" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin20" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin21" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin22" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin23" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin24" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetSMBin25" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin26" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin27" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin28" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin29" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin30" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin31" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetSMBin32" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете подмрежовата маска в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetSMDec1" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetSMDec2" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetSMDec3" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetSMDec4" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес на подмрежа №1 в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="subnetNABin11" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin12" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin13" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin14" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin15" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin16" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin17" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin18" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin19" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin110" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin111" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin112" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin113" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin114" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin115" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin116" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin117" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin118" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin119" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin120" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin121" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin122" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin123" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin124" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin125" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin126" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin127" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin128" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin129" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin130" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin131" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin132" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес на подмрежа №1 в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetNADec11" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec12" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec13" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec14" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса на подмрежа №1 в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="subnetBRABin11" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin12" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin13" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin14" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin15" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin16" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin17" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin18" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin19" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin110" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin111" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin112" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin113" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin114" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin115" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin116" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin117" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin118" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin119" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin120" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin121" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin122" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin123" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin124" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin125" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin126" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin127" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin128" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin129" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin130" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin131" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin132" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса на подмрежа №1 в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetBRADec11" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec12" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec13" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec14" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете обхвата на подмрежа №1: </div>
+                </div>
+                <div class="info-text-container">
+                    <div>от </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetRangeFrom11" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom12" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom13" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom14" maxlength="3" minlength="1" />
+                </div>
+                <div class="info-text-container">
+                    <div>до </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetRangeTo11" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo12" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo13" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo14" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес на подмрежа №2 в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="subnetNABin21" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin22" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin23" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin24" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin25" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin26" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin27" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin28" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin29" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin210" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin211" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin212" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin213" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin214" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin215" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin216" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin217" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin218" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin219" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin220" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin221" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin222" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin223" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin224" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin225" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin226" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin227" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin228" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin229" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin230" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin231" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin232" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес на подмрежа №2 в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetNADec21" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec22" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec23" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec24" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса на подмрежа №2 в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="subnetBRABin21" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin22" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin23" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin24" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin25" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin26" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin27" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin28" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin29" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin210" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin211" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin212" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin213" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin214" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin215" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin216" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin217" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin218" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin219" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin220" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin221" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin222" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin223" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin224" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin225" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin226" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin227" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin228" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin229" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin230" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin231" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin232" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса на подмрежа №2 в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetBRADec21" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec22" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec23" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec24" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете обхвата на подмрежа №2: </div>
+                </div>
+                <div class="info-text-container">
+                    <div>от </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetRangeFrom21" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom22" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom23" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom24" maxlength="3" minlength="1" />
+                </div>
+                <div class="info-text-container">
+                    <div>до </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetRangeTo21" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo22" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo23" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo24" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес на подмрежа №3 в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="subnetNABin31" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin32" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin33" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin34" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin35" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin36" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin37" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin38" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin39" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin310" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin311" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin312" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin313" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin314" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin315" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin316" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin317" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin318" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin319" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin320" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin321" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin322" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin323" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin324" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetNABin325" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin326" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin327" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin328" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin329" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin330" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin331" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetNABin332" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете мрежовия адрес на подмрежа №3 в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetNADec31" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec32" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec33" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetNADec34" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса на подмрежа №3 в двоична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="ip-digit-box" name="subnetBRABin31" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin32" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin33" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin34" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin35" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin36" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin37" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin38" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin39" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin310" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin311" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin312" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin313" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin314" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin315" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin316" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin317" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin318" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin319" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin320" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin321" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin322" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin323" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin324" maxlength="1" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="ip-digit-box" name="subnetBRABin325" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin326" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin327" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin328" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin329" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin330" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin331" maxlength="1" minlength="1" />
+                    <input class="ip-digit-box" name="subnetBRABin332" maxlength="1" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете broadcast адреса на подмрежа №3 в десетична бройна система: </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetBRADec31" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec32" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec33" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetBRADec34" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
+            <div class="info-subContainer">
+                <div class="info-text-container">
+                    <div>Запишете обхвата на подмрежа №3: </div>
+                </div>
+                <div class="info-text-container">
+                    <div>от </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetRangeFrom31" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom32" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom33" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeFrom34" maxlength="3" minlength="1" />
+                </div>
+                <div class="info-text-container">
+                    <div>до </div>
+                </div>
+                <div class="ip-input-container">
+                    <input class="mini-input-box" name="subnetRangeTo31" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo32" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo33" maxlength="3" minlength="1" />
+                    <div class="ip-dot">.</div>
+                    <input class="mini-input-box" name="subnetRangeTo34" maxlength="3" minlength="1" />
+                </div>
+            </div>
+        </div>
+        <div class="turn-in-button-container">
+            <button class="turn-in-button">Предай</button>
+        </div>
+    </form>
+</body>
+</html>
